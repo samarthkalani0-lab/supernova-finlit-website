@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: supernova-finlit-website
+    runtime: node
+    plan: starter
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: OWNER_EMAIL
+        sync: false
+      - key: PUBLIC_BASE_URL
+        sync: false
+      - key: DB_PATH
+        value: /var/data/supernova.sqlite
+    disk:
+      name: supernova-data
+      mountPath: /var/data
+      sizeGB: 1
